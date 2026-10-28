@@ -3,63 +3,52 @@
 namespace App\Http\Controllers;
 
 use App\Models\Member;
+use App\Models\MembershipCategory;
+use App\Models\MembershipLevel;
 use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $members = Member::with(['category', 'level'])->get();
+
+        return view('members.index', compact('members'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        $categories = MembershipCategory::all();
+        $levels = MembershipLevel::all();
+
+        return view('members.create', compact(
+            'categories',
+            'levels'
+        ));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required|email',
+            'category_id' => 'required',
+            'level_id' => 'required'
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Member $member)
-    {
-        //
-    }
+        Member::create([
+            'membership_no' => 'MEM-' . time(),
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address,
+            'category_id' => $request->category_id,
+            'level_id' => $request->level_id,
+            'status' => 'active'
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Member $member)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Member $member)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Member $member)
-    {
-        //
+        return redirect()->route('members.index');
     }
 }
