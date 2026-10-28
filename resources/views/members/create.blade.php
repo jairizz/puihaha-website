@@ -2,51 +2,78 @@
 <html>
 <head>
     <title>Add Member</title>
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-<h2>Add Member</h2>
+<div class="navbar">
+    <a href="/categories">Categories</a>
+    <a href="/levels">Levels</a>
+    <a href="/members">Members</a>
+</div>
 
-<form action="{{ route('members.store') }}" method="POST">
-    @csrf
+<div class="container">
 
-    <label>First Name</label><br>
-    <input type="text" name="first_name"><br><br>
+    <div class="form-container">
 
-    <label>Last Name</label><br>
-    <input type="text" name="last_name"><br><br>
+        <h2>Member Registration</h2>
 
-    <label>Email</label><br>
-    <input type="email" name="email"><br><br>
+        <form action="{{ route('members.store') }}"
+              method="POST">
 
-    <label>Phone</label><br>
-    <input type="text" name="phone"><br><br>
+            @csrf
 
-    <label>Address</label><br>
-    <textarea name="address"></textarea><br><br>
+            <label>First Name</label>
+            <input type="text"
+                   name="first_name">
 
-    <label>Category</label><br>
-    <select name="category_id">
-        @foreach($categories as $category)
-            <option value="{{ $category->id }}">
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select><br><br>
+            <label>Last Name</label>
+            <input type="text"
+                   name="last_name">
 
-    <label>Level</label><br>
-    <select name="level_id">
-        @foreach($levels as $level)
-            <option value="{{ $level->id }}">
-                {{ $level->name }}
-            </option>
-        @endforeach
-    </select><br><br>
+            <label>Email</label>
+            <input type="email"
+                   name="email">
 
-    <button type="submit">
-        Save Member
-    </button>
-</form>
+            <label>Phone</label>
+            <input type="text"
+                   name="phone">
+
+            <label>Address</label>
+            <textarea name="address"></textareagory)
+
+                <option value="{{ $category->id }}">
+                    {{ $category->name }}
+                </option>
+
+                @endforeach
+
+            </select>
+
+            <label>Membership Level</label>
+
+            <select name="level_id">
+
+                @foreach($levels as $level)
+
+                <option value="{{ $level->id }}">
+                    {{ $level->name }}
+                </option>
+
+                @endforeach
+
+            </select>
+
+            <button type="submit">
+                Save Member
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

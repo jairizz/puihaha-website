@@ -2,22 +2,42 @@
 <html>
 <head>
     <title>Add Category</title>
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-<h2>Add Membership Category</h2>
+<div class="navbar">
+    <a href="/categories">Categories</a>
+    <a href="/levels">Levels</a>
+    <a href="/members">Members</a>
+</div>
 
-<form action="{{ route('categories.store') }}" method="POST">
-    @csrf
+<div class="container">
 
-    <label>Name:</label><br>
-    <input type="text" name="name"><br><br>
+    <div class="form-container">
 
-    <label>Description:</label><br>
-    <textarea name="description"></textarea><br><br>
+        <h2>Add Membership Category</h2>
 
-    <button type="submit">Save Category</button>
-</form>
+        <form action="{{ route('categories.store') }}" method="POST">
+
+            @csrf
+
+            <label>Name</label>
+            <input type="text" name="name">
+
+            <label>Description</label>
+            <textarea name="description"></textarea>
+
+            <button type="submit">
+                Save Category
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

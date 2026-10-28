@@ -1,34 +1,48 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Categories</title>
+    <title>Membership Categories</title>
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-<h2>Membership Categories</h2>
+<div class="navbar">
+    <a href="/categories">Categories</a>
+    <a href="/levels">Levels</a>
+    <a href="/members">Members</a>
+</div>
 
-<a href="{{ route('categories.create') }}">
-    Add Category
-</a>
+<div class="container">
 
-<br><br>
+    <h2>Membership Categories</h2>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Description</th>
-    </tr>
+    <a href="{{ route('categories.create') }}"
+       class="btn btn-primary">
+       Add Category
+    </a>
 
-    @foreach($categories as $category)
-    <tr>
-        <td>{{ $category->id }}</td>
-        <td>{{ $category->name }}</td>
-        <td>{{ $category->description }}</td>
-    </tr>
-    @endforeach
+    <table>
 
-</table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+
+        @foreach($categories as $category)
+
+        <tr>
+            <td>{{ $category->id }}</td>
+            <td>{{ $category->name }}</td>
+            <td>{{ $category->description }}</td>
+        </tr>
+
+        @endforeach
+
+    </table>
+
+</div>
 
 </body>
 </html>

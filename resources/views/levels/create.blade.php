@@ -2,28 +2,51 @@
 <html>
 <head>
     <title>Add Level</title>
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-<h2>Add Membership Level</h2>
+<div class="navbar">
+    <a href="/categories">Categories</a>
+    <a href="/levels">Levels</a>
+    <a href="/members">Members</a>
+</div>
 
-<form action="{{ route('levels.store') }}" method="POST">
-    @csrf
+<div class="container">
 
-    <label>Level Name</label><br>
-    <input type="text" name="name"><br><br>
+    <div class="form-container">
 
-    <label>Fee</label><br>
-    <input type="number" step="0.01" name="fee"><br><br>
+        <h2>Add Membership Level</h2>
 
-    <label>Validity Period</label><br>
-    <input type="number" name="validity_period"><br><br>
+        <form action="{{ route('levels.store') }}" method="POST">
 
-    <label>Benefits</label><br>
-    <textarea name="benefits"></textarea><br><br>
+            @csrf
 
-    <button type="submit">Save Level</button>
-</form>
+            <label>Level Name</label>
+            <input type="text" name="name">
+
+            <label>Fee</label>
+            <input type="number"
+                   step="0.01"
+                   name="fee">
+
+            <label>Validity Period</label>
+            <input type="number"
+                   name="validity_period">
+
+            <label>Benefits</label>
+            <textarea name="benefits"></textarea>
+
+            <button type="submit">
+                Save Level
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
 
 </body>
 </html>

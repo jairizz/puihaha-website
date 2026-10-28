@@ -2,37 +2,51 @@
 <html>
 <head>
     <title>Membership Levels</title>
+
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
 
-<h2>Membership Levels</h2>
+<div class="navbar">
+    <a href="/categories">Categories</a>
+    <a href="/levels">Levels</a>
+    <a href="/members">Members</a>
+</div>
 
-<a href="{{ route('levels.create') }}">
-    Add Level
-</a>
+<div class="container">
 
-<br><br>
+    <h2>Membership Levels</h2>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Fee</th>
-        <th>Validity</th>
-        <th>Benefits</th>
-    </tr>
+    <a href="{{ route('levels.create') }}"
+       class="btn btn-primary">
+       Add Level
+    </a>
 
-    @foreach($levels as $level)
-    <tr>
-        <td>{{ $level->id }}</td>
-        <td>{{ $level->name }}</td>
-        <td>{{ $level->fee }}</td>
-        <td>{{ $level->validity_period }}</td>
-        <td>{{ $level->benefits }}</td>
-    </tr>
-    @endforeach
+    <table>
 
-</table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Fee</th>
+            <th>Validity</th>
+            <th>Benefits</th>
+        </tr>
+
+        @foreach($levels as $level)
+
+        <tr>
+            <td>{{ $level->id }}</td>
+            <td>{{ $level->name }}</td>
+            <td>{{ $level->fee }}</td>
+            <td>{{ $level->validity_period }}</td>
+            <td>{{ $level->benefits }}</td>
+        </tr>
+
+        @endforeach
+
+    </table>
+
+</div>
 
 </body>
 </html>
