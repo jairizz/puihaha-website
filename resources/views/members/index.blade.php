@@ -3,7 +3,7 @@
 <head>
     <title>Members</title>
 
-    <link rel="stylesheet" href="/public/style.css">
+    <link rel="stylesheet" href="/public/css/style.css">
 </head>
 <body>
 
