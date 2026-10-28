@@ -7,59 +7,33 @@ use Illuminate\Http\Request;
 
 class MembershipLevelController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $levels = MembershipLevel::all();
+
+        return view('levels.index', compact('levels'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        //
+        return view('levels.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'name' => 'required',
+            'fee' => 'required|numeric',
+            'validity_period' => 'required|numeric',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(MembershipLevel $membershipLevel)
-    {
-        //
-    }
+        MembershipLevel::create([
+            'name' => $request->name,
+            'fee' => $request->fee,
+            'validity_period' => $request->validity_period,
+            'benefits' => $request->benefits,
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MembershipLevel $membershipLevel)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MembershipLevel $membershipLevel)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(MembershipLevel $membershipLevel)
-    {
-        //
+        return redirect()->route('levels.index');
     }
 }
