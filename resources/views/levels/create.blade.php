@@ -3,7 +3,7 @@
 <head>
     <title>Add Level</title>
 
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('public/style.css') }}">
 </head>
 <body>
 
