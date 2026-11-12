@@ -14,6 +14,6 @@ class MembershipCategory extends Model
 
     public function members(): HasMany
     {
-        return $this->hasMany(Member::class);
+        return $this->hasMany(Member::class, 'category_id');
     }
 }

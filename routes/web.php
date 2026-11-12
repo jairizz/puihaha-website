@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipCategoryController;
+use App\Http\Controllers\MembershipApplicationController;
 use App\Http\Controllers\MembershipLevelController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\WeatherController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +20,13 @@ Route::middleware('guest')->group(function (): void {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('login.store');
 });
+
+Route::get('/membership/apply', [MembershipApplicationController::class, 'create'])
+    ->name('membership.create');
+Route::post('/membership/apply', [MembershipApplicationController::class, 'store'])
+    ->name('membership.store');
+Route::get('/weather', [WeatherController::class, 'show'])->name('weather.show');
+Route::get('/api/weather', [WeatherController::class, 'show'])->name('api.weather.show');
 
 Route::middleware('auth')->group(function (): void {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

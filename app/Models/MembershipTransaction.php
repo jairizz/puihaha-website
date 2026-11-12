@@ -19,18 +19,24 @@ class MembershipTransaction extends Model
         'amount',
         'status',
         'notes',
+        'latitude',
+        'longitude',
         'applied_at',
         'approved_at',
         'expires_at',
+        'verification_sent_at',
     ];
 
     protected function casts(): array
     {
         return [
             'amount' => 'decimal:2',
+            'latitude' => 'decimal:7',
+            'longitude' => 'decimal:7',
             'applied_at' => 'datetime',
             'approved_at' => 'datetime',
             'expires_at' => 'datetime',
+            'verification_sent_at' => 'datetime',
         ];
     }
 

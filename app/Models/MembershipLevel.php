@@ -24,7 +24,7 @@ class MembershipLevel extends Model
 
     public function members(): HasMany
     {
-        return $this->hasMany(Member::class);
+        return $this->hasMany(Member::class, 'level_id');
     }
 
     public function transactions(): HasMany

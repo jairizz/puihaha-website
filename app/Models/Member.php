@@ -22,14 +22,13 @@ class Member extends Model
 
     public function category(): BelongsTo
     {
-        return $this->belongsTo(MembershipCategory::class);
+        return $this->belongsTo(MembershipCategory::class, 'category_id');
     }
 
     public function level(): BelongsTo
     {
-        return $this->belongsTo(MembershipLevel::class);
+        return $this->belongsTo(MembershipLevel::class, 'level_id');
     }
-
     public function transactions(): HasMany
     {
         return $this->hasMany(MembershipTransaction::class);
