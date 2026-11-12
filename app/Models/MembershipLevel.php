@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MembershipLevel extends Model
 {
@@ -10,11 +11,24 @@ class MembershipLevel extends Model
         'name',
         'fee',
         'validity_period',
-        'benefits'
+        'benefits',
     ];
 
-    public function members()
+    protected function casts(): array
+    {
+        return [
+            'fee' => 'decimal:2',
+            'validity_period' => 'integer',
+        ];
+    }
+
+    public function members(): HasMany
     {
         return $this->hasMany(Member::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(MembershipTransaction::class);
     }
 }

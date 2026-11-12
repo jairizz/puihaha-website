@@ -3,8 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\MembershipCategory;
-use App\Models\MembershipLevel;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Member extends Model
 {
@@ -17,15 +17,26 @@ class Member extends Model
         'address',
         'category_id',
         'level_id',
-        'status'
+        'status',
     ];
-    public function category()
+
+    public function category(): BelongsTo
     {
         return $this->belongsTo(MembershipCategory::class);
     }
 
-    public function level()
+    public function level(): BelongsTo
     {
         return $this->belongsTo(MembershipLevel::class);
+    }
+
+    public function transactions(): HasMany
+    {
+        return $this->hasMany(MembershipTransaction::class);
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
     }
 }

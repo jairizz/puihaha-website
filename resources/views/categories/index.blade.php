@@ -1,57 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="page-header">
-    <div>
-        <div class="page-label">MEMBERSHIP MANAGEMENT</div>
-        <h1>Membership Categories</h1>
-        <p>Organize and manage different types of members.</p>
-    </div>
-
-    <a href="{{ route('categories.create') }}" class="primary-btn">
-        <i class="fas fa-plus"></i>
-        Add Category
-    </a>
-</div>
-
-<div class="table-card">
-    <div class="table-heading">
-        <div>
-            <h2>Category Directory</h2>
-            <span>All available membership categories</span>
-        </div>
-    </div>
-
-    <div class="table-wrapper">
-        <table class="data-table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                @foreach($categories as $category)
-                    <tr>
-                        <td class="record-id">
-                            #{{ $category->id }}
-                        </td>
-
-                        <td>
-                            <strong>{{ $category->name }}</strong>
-                        </td>
-
-                        <td>
-                            {{ $category->description ?: 'No description provided' }}
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
-</div>
-
+<div class="page-shell"><header class="page-header"><div><span class="eyebrow">MEMBERSHIP MANAGEMENT</span><h1>Categories</h1><p>Organize members into clear groups for easier administration.</p></div><a href="{{ route('categories.create') }}" class="primary-btn"><i class="fa-solid fa-plus"></i> Add category</a></header>
+<section class="table-card"><div class="table-toolbar"><div><h2>Category directory</h2><span>{{ $categories->count() }} available categories</span></div></div><div class="table-wrapper"><table class="data-table"><thead><tr><th>ID</th><th>Category</th><th>Description</th><th>Members</th><th></th></tr></thead><tbody>@forelse($categories as $category)<tr><td class="record-id">#{{ $category->id }}</td><td><strong>{{ $category->name }}</strong></td><td>{{ $category->description ?: 'No description provided' }}</td><td><span class="count-badge">{{ $category->members_count }}</span></td><td class="row-actions"><a href="{{ route('categories.edit', $category) }}" class="icon-btn" title="Edit"><i class="fa-solid fa-pen"></i></a><form action="{{ route('categories.destroy', $category) }}" method="POST" onsubmit="return confirm('Delete this category?')">@csrf @method('DELETE')<button class="icon-btn danger-icon" title="Delete"><i class="fa-solid fa-trash"></i></button></form></td></tr>@empty<tr><td colspan="5" class="empty-state">No categories have been created yet.</td></tr>@endforelse</tbody></table></div></section></div>
 @endsection

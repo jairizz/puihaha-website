@@ -1,0 +1,5 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="page-shell narrow-shell"><div class="back-link"><a href="{{ route('categories.index') }}"><i class="fa-solid fa-arrow-left"></i> Back to categories</a></div><section class="form-card"><div class="form-heading"><span class="eyebrow">MEMBERSHIP MANAGEMENT</span><h1>Edit category</h1><p>Update the category information.</p></div>@include('partials.validation-errors')<form action="{{ route('categories.update', $category) }}" method="POST" class="form-grid">@csrf @method('PUT')<div class="form-field full-field"><label for="name">Category name <span>*</span></label><input id="name" name="name" value="{{ old('name', $category->name) }}" required></div><div class="form-field full-field"><label for="description">Description</label><textarea id="description" name="description" rows="4">{{ old('description', $category->description) }}</textarea></div><div class="form-actions full-field"><button class="primary-btn" type="submit"><i class="fa-solid fa-floppy-disk"></i> Save changes</button><a href="{{ route('categories.index') }}" class="secondary-btn">Cancel</a></div></form></section></div>
+@endsection

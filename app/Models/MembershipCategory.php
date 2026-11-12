@@ -3,15 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Member;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class MembershipCategory extends Model
 {
     protected $fillable = [
         'name',
-        'description'
+        'description',
     ];
-    public function members()
+
+    public function members(): HasMany
     {
         return $this->hasMany(Member::class);
     }

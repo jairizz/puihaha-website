@@ -1,36 +1,54 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\TaskController;
-use App\Http\Controllers\MemberController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MembershipCategoryController;
 use App\Http\Controllers\MembershipLevelController;
-use App\Models\Member;
-use App\Models\MembershipCategory;
-use App\Models\MembershipLevel;
+use App\Http\Controllers\MemberController;
+use App\Http\Controllers\PageController;
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\TaskController;
+use App\Http\Controllers\TransactionController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route(auth()->check() ? 'dashboard' : 'login');
 });
 
-Route::get('/about', [PageController::class, 'about']);
+Route::middleware('guest')->group(function (): void {
+    Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+    Route::post('/login', [AuthController::class, 'login'])->name('login.store');
+});
 
-Route::get('/tasks/{id}', [PageController::class, 'task']);
+Route::middleware('auth')->group(function (): void {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/tasks', [TaskController::class, 'index'])
-    ->name('tasks.index');
+    Route::get('/dashboard', [PageController::class, 'dashboard'])->name('dashboard');
 
-Route::post('/tasks', [TaskController::class, 'store'])
-    ->name('tasks.store');
+    Route::resource('members', MemberController::class);
+    Route::resource('categories', MembershipCategoryController::class);
+    Route::resource('levels', MembershipLevelController::class);
 
-Route::resource('categories', MembershipCategoryController::class);
-Route::resource('levels', MembershipLevelController::class);
-Route::resource('members', MemberController::class);
-Route::get('/dashboard', function () {
-    $members = Member::with(['category', 'level'])->get();
-    $categories = MembershipCategory::all();
-    $levels = MembershipLevel::all();
+    Route::resource('transactions', TransactionController::class)->only([
+        'index',
+        'create',
+        'store',
+        'show',
+    ]);
+    Route::post('/transactions/{transaction}/approve', [TransactionController::class, 'approve'])
+        ->name('transactions.approve');
+    Route::post('/transactions/{transaction}/cancel', [TransactionController::class, 'cancel'])
+        ->name('transactions.cancel');
+    Route::get('/transactions/{transaction}/receipt', [TransactionController::class, 'receipt'])
+        ->name('transactions.receipt');
 
-    return view('dashboard', compact('members', 'categories', 'levels'));
-})->name('dashboard');
+    Route::get('/transactions/{transaction}/payments/create', [PaymentController::class, 'create'])
+        ->name('payments.create');
+    Route::post('/transactions/{transaction}/payments', [PaymentController::class, 'store'])
+        ->name('payments.store');
+    Route::get('/payments', [PaymentController::class, 'index'])->name('payments.index');
+});
+
+Route::get('/about', [PageController::class, 'about'])->name('about');
+Route::get('/tasks/{id}', [PageController::class, 'task'])->name('tasks.show');
+Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
+Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
